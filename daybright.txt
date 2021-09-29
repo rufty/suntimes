@@ -1,0 +1,59 @@
+// How bright is it at the moment?
+// Daylight=4, CivilTwilight=3, NauticalTwilight=2, AstronomicalTwilight=1, Night=0
+int
+daybright ( double lat, double lon, int CY, int CM, int CD, int Ch, int Cm, int Cs )
+//FIXME - No good for moving clocks!
+//FIXME - Has gone flurgy around the equinox at Svalbard, removal of remainder() might have fixed?
+  {
+  // Saved date.
+  static int SY = 0, SM = 0, SD = 0 ;
+  // Returned values.
+  static int ret0, ret1, ret2, ret3 ;
+  // "Rise" and "Set" times, in seconds.
+  static int R0, S0, R1, S1, R2, S2, R3, S3 ;
+  // First run? New day???
+  if ( SY!=CY || SM!=CM || SD!=CD )
+    {
+    // "Rise" and "Set" times.
+    int R0h, R0m, R0s, S0h, S0m, S0s ;
+    int R1h, R1m, R1s, S1h, S1m, S1s ;
+    int R2h, R2m, R2s, S2h, S2m, S2s ;
+    int R3h, R3m, R3s, S3h, S3m, S3s ;
+    // Save, for next times.
+     SY=CY; SM=CM ; SD=CD ;
+    // Sunrise/sunset.
+    ret0 = suntimes ( 0, lat,lon, CY,CM,CD, &R0h,&R0m,&R0s, &S0h,&S0m,&S0s ) ;
+    R0 = 3600*R0h+60*R0m+R0s ; S0 = 3600*S0h+60*S0m+S0s ;
+    // Civil twilight.
+    ret1 = suntimes ( 1, lat,lon, CY,CM,CD, &R1h,&R1m,&R1s, &S1h,&S1m,&S1s ) ;
+    R1 = 3600*R1h+60*R1m+R1s ; S1 = 3600*S1h+60*S1m+S1s ;
+    // Nautical twilight.
+    ret2 = suntimes ( 2, lat,lon, CY,CM,CD, &R2h,&R2m,&R2s, &S2h,&S2m,&S2s ) ;
+    R2 = 3600*R2h+60*R2m+R2s ; S2 = 3600*S2h+60*S2m+S2s ;
+    // Astronomical twilight.
+    ret3 = suntimes ( 3, lat,lon, CY,CM,CD, &R3h,&R3m,&R3s, &S3h,&S3m,&S3s ) ;
+    R3 = 3600*R3h+60*R3m+R3s ; S3 = 3600*S3h+60*S3m+S3s ;
+    /*
+    printf ( "***************************************\n" ) ;
+    printf ( " ret0=%+d   ret1=%+d   ret2=%+d   ret3=%+d\n", ret0, ret1, ret2, ret3 ) ;
+    printf ( "***************************************\n" ) ;
+    if (ret0==0) printf ( "0:=> %02d:%02d:%02d (%5d)  %02d:%02d:%02d (%5d)\n", R0h,R0m,R0s, R0, S0h,S0m,S0s, S0 ) ;
+    if (ret1==0) printf ( "1:=> %02d:%02d:%02d (%5d)  %02d:%02d:%02d (%5d)\n", R1h,R1m,R1s, R1, S1h,S1m,S1s, S1 ) ;
+    if (ret2==0) printf ( "2:=> %02d:%02d:%02d (%5d)  %02d:%02d:%02d (%5d)\n", R2h,R2m,R2s, R2, S2h,S2m,S2s, S2 ) ;
+    if (ret3==0) printf ( "3:=> %02d:%02d:%02d (%5d)  %02d:%02d:%02d (%5d)\n", R3h,R3m,R3s, R3, S3h,S3m,S3s, S3 ) ;
+    printf ( "***************************************\n" ) ;
+    */
+    }
+  // Current time, in seconds.
+  int C = 3600*Ch+60*Cm+Cs ;
+  // Daylight?
+  if ( ( ret0 == -1 ) || ( ret0==0 && C>=R0 && C<=S0 ) ) return 4 ;
+  // Civil twilight?
+  if ( ( ret1 == -1 ) || ( ret1==0 && C>=R1 && C<=S1 ) ) return 3 ;
+  // Nautical twilight?
+  if ( ( ret2 == -1 ) || ( ret2==0 && C>=R2 && C<=S2 ) ) return 2 ;
+  // Astronomical twilight?
+  if ( ( ret3 == -1 ) || ( ret3==0 && C>=R3 && C<=S3 ) ) return 1 ;
+  // Night!
+  return 0 ;
+  }

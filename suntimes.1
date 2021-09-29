@@ -1,0 +1,58 @@
+.TH SUNTIMES "1" "SEPTEMBER 2021" "suntimes 1.0.0" "User Commands"
+.SH NAME
+suntimes \- calculate sunrise and sunset times, also twilights.
+.SH SYNOPSIS
+.B suntimes
+[\fIOPTION\fR] ...
+.SH DESCRIPTION
+This utility, suntimes, caclulates sunrise and sunset times, or civil, nautical or astronimic twilights
+for the configured or specified place on the specified date, default today.
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Display the help text and exit.
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+Display version information and exit.
+.TP
+\fB\-0\fR
+Default. Calculate sunrise and sunset.
+.TP
+\fB\-1\fR
+Calculate civil twilight times. (Sun 6deg. below horizon.)
+.TP
+\fB\-2\fR
+Calculate nautical twilight times. (Sun 12deg. below horizon.)
+.TP
+\fB\-3\fR
+Calculate astronomical twilight times. (Sun 18deg. below horizon.)
+.TP
+\fB\--la[titude]=<number>\fR
+Specify latitude of position for calculation, in decimal degrees, North positive.
+.TP
+\fB\--lo[ongitude]=<number>\fR
+Specify longitude of position for calculation, in decimal degrees, East positive.
+.SH FILES
+Configuration files are loaded in order, /etc/suntimes.conf then ~/.suntimesrc
+The system-wide configuration file overrides compile-time defaults. The user configuration file overrides
+the system-wide configuration, and finally the command line options override that.
+.SH NOTES
+All times are in UTC. Output is comma delimited.
+Only the last specified of -0 -1 -2 -3 will be in effect.
+It is possible, but unpredictable, to specify only one, or mor than one, of latitude or longitude.
+.SH EXAMPLE
+$ suntimes -0 --la=+52.628 --lo=+1.252 2021 09 24
+.TP
+05:43:29,17:49:41
+.SH "SEE ALSO"
+suntimes.conf(5)
+.SH "REPORTING BUGS"
+Report bugs to: bugs@wbh.org
+.br
+.SH COPYRIGHT
+Copyright \(co 2021 W.B.Hill <mail@wbh.org>
+.br
+License, dual. Either GPLv2 or BSD 2 clause, as appropriate.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

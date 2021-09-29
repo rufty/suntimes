@@ -1,0 +1,34 @@
+.TH SUNTIMES.CONF "5" "SEPTEMBER 2021" "suntimes.conf 1.0" "File Formats Manual"
+.SH NAME
+suntimes.conf \- "suntimes" configuration file.
+.SH DESCRIPTION
+Configuration file for the "suntimes" utility.
+.TP
+All currently recognized settings:
+.TP
+\fBlatitude\fR
+Default latitude of position for calculation, in decimal degrees, North positive.
+.TP
+\fBlongitude\fR
+Default longitude of position for calculation, in decimal degrees, Eastpositive.
+.SH FILES
+Configuration files are loaded in order, /etc/suntimes.conf then ~/.suntimesrc
+The system-wide configuration file overrides compile-time defaults. The user configuration file overrides
+the system-wide configuration, and finally the command line options override that.
+.SH "EXAMPLE"
+# For: Norwich, UK
+.sp 0
+latitude = +52.628
+.sp 0
+longitude = +1.252
+.SH "SEE ALSO"
+suntimes(1)
+.SH "REPORTING BUGS"
+Report bugs to: bugs@wbh.org
+.SH COPYRIGHT
+Copyright \(co 2021 W.B.Hill <mail@wbh.org>
+.br
+License, dual. Either GPLv2 or BSD 2 clause, as appropriate.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

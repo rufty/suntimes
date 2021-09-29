@@ -1,0 +1,14 @@
+ChangeLog for suntimes
+======================
+
+0.1      Inital collection of relevant code from various previous projects.
+0.2-0.4  Debugging/development.
+0.5      First working version. Hard-coded lat+lon.
+0.6      GPS-driven version, for Arduino.
+0.7      Command line utility.
+0.8      Refactored to use configuration file and command line options.
+0.9      Tested against publically available sun times data.
+1.0      Inital public release.
+
+	
+W.B.Hill <mail@wbh.org>

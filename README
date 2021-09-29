@@ -1,0 +1,50 @@
+This utility, suntimes, calculates sunrise and sunset times and also twilight times.
+It is based on: https://www.edwilliams.org/sunrise_sunset_example.htm
+
+Parts by me I've released it under either the GPLv2 or the BSD 2 clause license.
+Pick either.
+
+Notes:
+This is *not* a to-the-millisecond accurate. I've been using is to draw day/night bars
+behind weather temperature charts, where 1pixel is about 10minutes.
+This passed visual inspection.
+Also, early versions (v0.6) was programmed into a NeoPixel Arduino clock, to dim by
+sunrise/sunset. Again, adequate for this purpose. (See daybright.txt)
+
+Installation:
+It requires the libConfuse configuration parsing library.
+  $ make
+  $ sudo make install
+By default the installation PREFIX, set in Makefile, is /usr/local
+This will install $(PREFIX)/bin/suntimes, $(PREFIX)/man/man1/suntimes.1.gz
+and $(PREFIX)/man/man5/suntimes.conf.5.gz
+No /etc/suntimes.conf or ~/.suntimesrc is installed by default.
+
+Testing:
+Testing was dones against data downloaded from:
+  https://services.timeanddate.com/api/datadownload/astro.html
+The publically available sets were for  Amsterdam, Oslo and Maputo, for year 2020
+(Believed copyright, so not included.)
+    ==============================
+      PLACE   ZENITH AVGERR MAXERR
+    ==============================
+    Amsterdam   0      1.1    37
+    Amsterdam   1      1.1    40
+    Amsterdam   2      1.6   109
+    Amsterdam   3      6.1   603
+    Oslo        0      1.6    52
+    Oslo        1      2.2   177
+    Oslo        2      7.6   645
+    Oslo        3      8.7   648
+    Maputo      0      0.5    20
+    Maputo      1      0.5    21
+    Maputo      2      0.5    22
+    Maputo      3      0.6    24
+    ==============================
+All errors in seconds.
+I believe a main source of error is calculating without atmospheric refractions.
+NB Errors can be sufficient to trigger "NeverSets/NeverRises" a day out.
+Also ran spot checks for Murmansk (above Arctic circle).
+
+
+W.B.Hill <mail@wbh.org> 20210924
